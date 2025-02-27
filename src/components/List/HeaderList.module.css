@@ -1,0 +1,32 @@
+.headerList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerList aside {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+}
+
+.headerList aside:first-child {
+  color: var(--blue);
+}
+
+.headerList aside:last-child {
+  color: var(--purple);
+}
+
+.headerList aside p {
+  font-size: 0.875rem;
+}
+
+.headerList aside span {
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  color: var(--gray-200);
+  background: var(--gray-400);
+  border-radius: 16px;
+}
