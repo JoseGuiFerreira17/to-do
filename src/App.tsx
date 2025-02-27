@@ -14,14 +14,11 @@ export interface ITask {
 }
 
 function App() {
-  const [tasks, setTasks] = useState<ITask[]>([
-    {
-      id: 1,
-      text: 'Estudar React',
-      isChecked: true,
-    },
-  ]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
   const [textTaskInput, setTextTaskInput] = useState('');
+
+  const tasksCompletedsCount = tasks.filter((task) => task.isChecked).length;
+  const tasksCount = tasks.length;
 
   function handleAddTask(e: FormEvent) {
     e.preventDefault();
@@ -35,6 +32,19 @@ function App() {
     setTasks([...tasks, newTask]);
     setTextTaskInput('');
   }
+
+  function handleRemoveTask(id: number) {
+    setTasks(tasks.filter((task) => task.id !== id));
+  }
+
+  function handleCheckTask(id: number) {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, isChecked: !task.isChecked } : task
+      )
+    );
+  }
+
   return (
     <main>
       <Header />
@@ -47,11 +57,16 @@ function App() {
           <Button onClick={handleAddTask} />
         </div>
         <div className={styles.taskList}>
-          <HeaderList />
+          <HeaderList count={tasksCount} completed={tasksCompletedsCount} />
           {tasks.length > 0 ? (
             <div>
               {tasks.map((task) => (
-                <Item key={task.id} task={task} />
+                <Item
+                  key={task.id}
+                  task={task}
+                  removeTask={handleRemoveTask}
+                  toggleTask={handleCheckTask}
+                />
               ))}
             </div>
           ) : (
