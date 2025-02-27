@@ -14,7 +14,13 @@ export interface ITask {
 }
 
 function App() {
-  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [tasks, setTasks] = useState<ITask[]>([
+    {
+      id: 1,
+      text: 'Estudar React',
+      isChecked: true,
+    },
+  ]);
   const [textTaskInput, setTextTaskInput] = useState('');
 
   function handleAddTask(e: FormEvent) {
@@ -42,13 +48,15 @@ function App() {
         </div>
         <div className={styles.taskList}>
           <HeaderList />
-          <div>
-            <Item />
-            {tasks.map((task) => {
-              return <Item />;
-            })}
-          </div>
-          <Empty />
+          {tasks.length > 0 ? (
+            <div>
+              {tasks.map((task) => (
+                <Item key={task.id} task={task} />
+              ))}
+            </div>
+          ) : (
+            <Empty />
+          )}
         </div>
       </section>
     </main>
